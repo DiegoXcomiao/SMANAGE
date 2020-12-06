@@ -1,0 +1,3 @@
+spring.mvc.static-path-pattern=/image/**
+spring.resources.static-locations=file:/Users/xiaolin/uploadFile
+#spring.resources.static-locations=file:/home/diego/uploadFile

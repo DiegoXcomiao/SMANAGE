@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.mapper.NodeMapper">
+    <insert id="addNode" parameterType="org.manage.model.Node">
+    INSERT INTO t_node(nodeId,code,name) VALUES (#{nodeId},#{code},#{name})
+    </insert>
+    <delete id="deleteNode" parameterType="org.manage.model.Node">
+        <bind name="code_pattern" value="code + '%'"/>
+        DELETE FROM t_node WHERE code like #{code_pattern}
+    </delete>
+    <update id="updateNode" parameterType="org.manage.model.Node">
+        UPDATE t_node set name=#{name} WHERE code=#{code}
+    </update>
+    <select id="getNodeById" parameterType="int" resultType="org.manage.model.Node">
+        SELECT * FROM t_node WHERE id=#{roleId}
+    </select>
+    <select id="getAllNodes" resultType="org.manage.model.Node">
+        SELECT * FROM t_node
+    </select>
+    <select id="getAllNum" resultType="Integer">
+        SELECT count(*) FROM t_node
+    </select>
+    <select id="getNode" parameterType="org.manage.model.Node" resultType="org.manage.model.Node">
+        SELECT * FROM t_node WHERE code=#{code}
+    </select>
+</mapper>

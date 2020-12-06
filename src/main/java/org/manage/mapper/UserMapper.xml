@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.mapper.UserMapper">
+    <insert id="addUser" parameterType="org.manage.model.User">
+        INSERT INTO t_user(code,name,roleCode,roleName,nodeCode,nodeName,password,verifyCode,telno,picpath,enabled)
+        VALUES (#{code},#{name},#{roleCode},#{roleName},#{nodeCode},#{nodeName},#{password},#{verifyCode},#{telno},#{picpath},#{enabled})
+    </insert>
+    <delete id="deleteUser" parameterType="org.manage.model.User">
+        DELETE FROM t_user WHERE code=#{code}
+    </delete>
+    <update id="updateUser" parameterType="org.manage.model.User">
+        UPDATE t_user set name=#{name},roleCode=#{roleCode},roleName=#{roleName},nodeCode=#{nodeCode},nodeName=#{nodeName},
+        verifyCode=#{verifyCode},telno=#{telno},picpath=#{picpath},enabled=#{enabled} WHERE code=#{code}
+    </update>
+    <update id="updatePassword" parameterType="org.manage.model.User">
+        UPDATE t_user set password=#{password} WHERE code=#{code}
+    </update>
+    <select id="getMaxCode" resultType="String">
+        SELECT max(code) FROM t_user
+    </select>
+    <select id="getUsers" parameterType="org.manage.model.User" resultType="org.manage.model.User">
+        SELECT * FROM t_user where 1=1
+        <if test="name != null and name != ''">
+            and name = #{name}
+        </if>
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+        <if test="nodeCode != null and nodeCode != ''">
+            and nodeCode = #{nodeCode}
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            and roleCode = #{roleCode}
+        </if>
+        <if test="enabled != null and enabled != ''">
+            and enabled = #{enabled}
+        </if>
+    </select>
+    <select id="getNum" parameterType="org.manage.model.User" resultType="Integer">
+        SELECT count(*) FROM t_user where 1=1
+        <if test="name != null and name != ''">
+          and name = #{name}
+        </if>
+        <if test="code != null and code != ''">
+          and code = #{code}
+        </if>
+        <if test="nodeCode != null and nodeCode != ''">
+          and nodeCode = #{nodeCode}
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+          and roleCode = #{roleCode}
+        </if>
+        <if test="enabled != null and enabled != ''">
+            and enabled = #{enabled}
+        </if>
+    </select>
+    <select id="getUserByRoleCode" parameterType="org.manage.model.User" resultType="org.manage.model.User">
+        <bind name="pattern" value="'%' + roleCode + '%'" />
+        select * from t_user where roleCode like #{pattern}
+    </select>
+    <select id="getUserByNodeCode" parameterType="org.manage.model.User" resultType="org.manage.model.User">
+        <bind name="pattern" value="'%' + nodeCode + '%'" />
+        select * from t_user where nodeCode like #{pattern}
+    </select>
+    <update id="resetPasswd" parameterType="org.manage.model.User">
+        UPDATE t_user set password=#{password} WHERE code=#{code}
+    </update>
+    <update id="resetPicpath" parameterType="org.manage.model.User">
+        UPDATE t_user set picpath=#{picpath} WHERE code=#{code}
+    </update>
+</mapper>

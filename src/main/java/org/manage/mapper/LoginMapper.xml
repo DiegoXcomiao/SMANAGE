@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.mapper.LoginMapper">
+    <insert id="addLogin" parameterType="org.manage.model.Login">
+        INSERT INTO t_login(userCode,state) VALUES (#{userCode},#{state})
+    </insert>
+    <update id="updateLogin" parameterType="org.manage.model.Login">
+        UPDATE t_login set state=#{state} WHERE userCode=#{userCode}
+    </update>
+    <select id="getLogin" parameterType="org.manage.model.Login" resultType="org.manage.model.Login">
+        SELECT * FROM t_login WHERE userCode = #{userCode}
+    </select>
+</mapper>

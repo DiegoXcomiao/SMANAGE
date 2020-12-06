@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.manage.mapper.MessageMapper">
+    <insert id="addMessage" parameterType="org.manage.model.Message">
+        INSERT INTO t_message(message,verifyCode,telno,userCode)
+        VALUES (#{message},#{verifyCode},#{telno},#{userCode})
+    </insert>
+    <delete id="deleteMessage" parameterType="org.manage.model.Message">
+        DELETE FROM t_message WHERE messageId=#{messageId}
+    </delete>
+    <update id="updateMessage" parameterType="org.manage.model.Message">
+        UPDATE t_message set message=#{message},verifyCode=#{verifyCode},telno=#{telno},userCode=#{userCode}
+        WHERE userCode=#{userCode}
+    </update>
+    <select id="getMessage" parameterType="org.manage.model.Message" resultType="org.manage.model.Message">
+        SELECT * FROM t_message WHERE userCode=#{userCode}
+    </select>
+</mapper>
